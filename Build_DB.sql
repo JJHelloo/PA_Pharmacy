@@ -3,6 +3,15 @@
 -- Model: New Model    Version: 1.0
 -- MySQL Workbench Forward Engineering
 
+-- Corrections to make per feedback:
+-- Doctor and Patient usually have 1:Many relations. But in your case, you have a related      doctor table, patient table and includes table. I will cause redundancy issue, many        patientid or doctorid will be null in includes table.
+
+-- Doctor and Prescription needs to have 1:Many. So you rx table needs to be updated. 
+
+-- Patient and Prescription needs to have 1:Many. So you rx table needs to be updated. 
+
+-- Should not use "age" or "experience" as columns as these values change every year and        would require database be updated every year. Better to use birthdate or                    year_start_practice as values since these don't change.
+
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';

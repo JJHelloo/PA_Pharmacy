@@ -204,3 +204,26 @@ alter table doctor modify practice_since INTEGER;
 
 alter table doctor
 rename column DoctorID To id;
+
+alter table patient
+rename column Fname TO name;
+
+alter table patient
+drop column Lname;
+
+alter table patient
+rename column patientid To id;
+
+alter table patient
+rename column doctor_doctorID To primaryID;
+
+alter table patient
+rename column address To street;
+
+ALTER TABLE patient
+  ADD city varchar(40) NOT NULL
+    AFTER street;
+    
+ALTER TABLE patient
+  ADD state varchar(40) NOT NULL
+    AFTER city;

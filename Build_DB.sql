@@ -201,3 +201,6 @@ alter table doctor
 rename column StartPractice To practice_since;
 
 alter table doctor modify practice_since INTEGER;
+
+alter table doctor
+rename column DoctorID To id;

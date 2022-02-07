@@ -190,3 +190,14 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+alter table doctor
+rename column Fname TO name;
+
+alter table doctor
+drop column Lname;
+
+alter table doctor
+rename column StartPractice To practice_since;
+
+alter table doctor modify practice_since INTEGER;

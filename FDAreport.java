@@ -2,6 +2,8 @@
 //Take user paramenters for FDA report requirements
 //Output result table to Console
 
+//TODO    ------  Program for user input to determine drug name and dates
+
 package com.csumb.cst363;
 import java.sql.*;
 
@@ -16,16 +18,18 @@ public static void main(String[] args) {
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "root"); ) {
 ///////
 
-/////// TESTING SELECT EXECUTION AND DISPLAY TO CONSOLE
-PreparedStatement ps = con.prepareStatement("select DrugID, TradeName, GenericName from drug where DrugID<=?");
-            ps.setInt(1, 15);
+PreparedStatement ps = con.prepareStatement("select dr.name, sum(rx.quantity) from doctor dr join rx on dr.id = rx.Doctor_DoctorID join drug d on rx._drugID = d.DrugID where d.TradeName =? AND rx.datefilled <? AND rx.datefilled >? group by dr.name");
+//TODO    ------  Program for user input to determine drug name and dates
+			ps.setString(1, "Lipitor");
+			ps.setString(2, "2022-02-07");
+			ps.setString(3, "2000-01-01");
+			
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String DrugID = rs.getString(1);
-                String TradeName = rs.getString(2);
-                String GenericName = rs.getString(3);
- 
-                System.out.printf("%5s %-20s %-20s \n", DrugID, TradeName, GenericName);
+                String DocName = rs.getString(1);
+                int Sum = rs.getInt(2);
+             
+                System.out.printf("%-20s %-20s \n", DocName, Sum);
             }
 
 
@@ -35,4 +39,4 @@ PreparedStatement ps = con.prepareStatement("select DrugID, TradeName, GenericNa
         }
     }
 
-}          
+}

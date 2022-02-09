@@ -229,3 +229,7 @@ ALTER TABLE patient
     AFTER city;
 
 ALTER TABLE RX add column pharmacy_id INTEGER;
+
+ALTER TABLE RX
+ADD CONSTRAINT `FK_pharmacy_id` FOREIGN KEY (`pharmacy_id`) 
+REFERENCES `pharmacy`(`pharmacyid`);

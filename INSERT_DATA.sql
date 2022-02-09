@@ -9,6 +9,12 @@ Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid
 Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('12654', 12, 5, '2019-10-10', '2022-02-05', 4, 5);
 Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('12671', 12, 90, '2022-01-10', '2022-01-10', 2, 3);
 
+-- INSERT PHARMACY_ID FOR COLUMN ADDED LATER ON FILLED PRESCRIPTIONS
+update rx set pharmacy_id = 1 where RxID = 12654;
+update rx set pharmacy_id = 3 where RxID = 12671;
+update rx set pharmacy_id = 3 where RxID = 59184;
+update rx set pharmacy_id = 2 where RxID = 59654;
+
 -- INSERTS FOR SOME PATIENTS
 insert into patient (id, ssn, name, birthdate, street, city, state, zipcode, primaryid) values (null, 333495434, 'patient One', '2000-05-06', '87 SE sreet', 'roseville', 'CA', 95913, 1);
 insert into patient (id, ssn, name, birthdate, street, city, state, zipcode, primaryid) values (null, 222495474, 'patient Two', '2003-01-21', '654 Main sreet', 'sacramento', 'CA', 95812, 2);

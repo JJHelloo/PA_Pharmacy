@@ -25,3 +25,10 @@ insert into doctor (id, ssn, name, specialty, practice_since) values (null, 5124
 insert into doctor (id, ssn, name, specialty, practice_since) values (null, 232023654, 'Doctor John', 'Pediatrics', '1997');
 insert into doctor (id, ssn, name, specialty, practice_since) values (null, 232577454, 'Doctor Kim', 'Pediatrics', '1999');
 insert into doctor (id, ssn, name, specialty, practice_since) values (null, 232025521, 'Doctor Pat', 'Family Medicine', '2003');
+
+--INSERTS FOR PHARMACY
+insert into pharmacy (pharmacyid, pharmacyname, address, phonenum) values (null, 'CVS-001', 'Sacramento', '555-555-4444');
+insert into pharmacy (pharmacyid, pharmacyname, address, phonenum) values (null, 'Walgreens', 'Roseville', '916-555-4444');
+insert into pharmacy (pharmacyid, pharmacyname, address, phonenum) values (null, 'Dokomos', 'Grass Valley', '530-333-5844');
+insert into pharmacy (pharmacyid, pharmacyname, address, phonenum) values (null, 'Safeway Rx', 'Marin', '415-375-9523');
+

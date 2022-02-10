@@ -1,5 +1,5 @@
 //Written by Anna Bellizzi
-//Take user paramenters for FDA report requirements
+//Take user parameters for FDA report requirements
 //Output result table to Console
 
 package com.csumb.cst363;
@@ -47,7 +47,7 @@ PreparedStatement ps = con.prepareStatement("select dr.name, sum(rx.quantity) fr
 
 //////
         } catch (Exception e) {
-            e.printStackTrace();
+          e.printStackTrace();
         }
     }
 

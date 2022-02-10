@@ -1,5 +1,5 @@
 //Written by Anna Bellizzi
-//Take user paramenters for ManagerReport requirements
+//Take user parameters for ManagerReport requirements
 //Output result table to Console
 package com.csumb.cst363;
 
@@ -47,7 +47,7 @@ public class ManagerReport {
 
 	//////
 	        } catch (Exception e) {
-	            e.printStackTrace();
+	          e.printStackTrace();
 	        }
 	    }
 } 

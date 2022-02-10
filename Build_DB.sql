@@ -228,6 +228,10 @@ ALTER TABLE patient
   ADD state varchar(40) NOT NULL
     AFTER city;
 
+ALTER TABLE patient
+  ADD zipcode INTEGER NOT NULL
+    AFTER state;
+
 ALTER TABLE RX add column pharmacy_id INTEGER;
 
 ALTER TABLE RX

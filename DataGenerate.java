@@ -15,7 +15,7 @@ public class DataGenerate
 {
    public static void main(String[] args)
    {
-      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "fgfjy2y6V64"); )
+      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "root"); )
       {
          //10 random doctors
          for (int i = 0; i < 10; i++)
@@ -212,7 +212,7 @@ public class DataGenerate
       //zipcode
       pat.setZipcode(address.zipCode());
 
-      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "fgfjy2y6V64"); )
+      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "root"); )
       {
          //primaryid
          PreparedStatement ps = con.prepareStatement("select count(*) from doctor");
@@ -248,7 +248,7 @@ public class DataGenerate
       Random gen = new Random();
       Faker faker = new Faker();
 
-      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "fgfjy2y6V64"); )
+      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "root"); )
       {
          //rxid
          //search database for max rxid that exists
@@ -282,45 +282,16 @@ public class DataGenerate
          //set drugID
          pre.setDrugID(rs.getInt(1));
          
-      }
-      catch (Exception e)
-      {
-         e.printStackTrace();
-      }
-      
-      //quantity (1-200)
-      int randQuantity = 1 + gen.nextInt(200 - 1 + 1);
-
-      pre.setQuantity(randQuantity);
-
-      //dateissued
-      //from 1900 to 2022
-      SimpleDateFormat simpleDateFormat = 
-            new SimpleDateFormat("YYYY-MM-dd");
-      Calendar c = Calendar.getInstance();
-      c.set(Calendar.YEAR, 1900);
-      c.add(Calendar.YEAR, gen.nextInt(122));
-      c.set(Calendar.DAY_OF_YEAR, 1);
-      c.add(Calendar.DAY_OF_YEAR, gen.nextInt(365));
-      Date dt = new Date(c.getTimeInMillis());
-      String random_date = simpleDateFormat.format(dt);
-      
-      pre.setDateIssued(random_date);
-
-      //datefilled is null
-
-      //doctorid
-      //pick random doctor
-      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "root"); )
-      {
-         PreparedStatement ps = con.prepareStatement("select count(*) from doctor");
-         ResultSet rs = ps.executeQuery();
+         //doctorid
+         //pick random doctor
+         ps = con.prepareStatement("select count(*) from doctor");
+         rs = ps.executeQuery();
          rs.next();
          //find how many doctors there are
-         int count = Integer.valueOf(rs.getString(1));
+         int doctorCount = Integer.valueOf(rs.getString(1));
          
          //pick one at random
-         int randDoctorID = 1 + gen.nextInt(count - 1 + 1);
+         int randDoctorID = 1 + gen.nextInt(doctorCount - 1 + 1);
          
          //obtain that doctor's id
          ps = con.prepareStatement("select id from doctor order by id");
@@ -352,6 +323,27 @@ public class DataGenerate
       {
          e.printStackTrace();
       }
+      
+      //quantity (1-200)
+      int randQuantity = 1 + gen.nextInt(200 - 1 + 1);
+
+      pre.setQuantity(randQuantity);
+
+      //dateissued
+      //from 1900 to 2022
+      SimpleDateFormat simpleDateFormat = 
+            new SimpleDateFormat("YYYY-MM-dd");
+      Calendar c = Calendar.getInstance();
+      c.set(Calendar.YEAR, 1900);
+      c.add(Calendar.YEAR, gen.nextInt(122));
+      c.set(Calendar.DAY_OF_YEAR, 1);
+      c.add(Calendar.DAY_OF_YEAR, gen.nextInt(365));
+      Date dt = new Date(c.getTimeInMillis());
+      String random_date = simpleDateFormat.format(dt);
+      
+      pre.setDateIssued(random_date);
+
+      //datefilled is null
 
       //pharmacy_id is null
 

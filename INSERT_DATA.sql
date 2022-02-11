@@ -29,10 +29,10 @@ insert into patient (id, ssn, name, birthdate, street, city, state, zipcode, pri
 -- INSERTS FOR SOME PRESCRIPTIONS
 -- USE WEB FORM TO CREATE A DOCTOR #5 THESE INSERTS ONLY INSERT 4 DOCTORS AND YOUR
 -- RX INSERTS WILL FAIL
-Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('54884', 12, 120, '2021-12-10', '2021-01-01', 4, 4);
-Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('59654', 12, 30, '2020-12-10', '2022-01-01', 1, 7);
-Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('12654', 12, 5, '2019-10-10', '2022-02-05', 4, 5);
-Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('12671', 12, 90, '2022-01-10', '2022-01-10', 2, 3);
+Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('1', 12, 120, '2021-12-10', '2021-01-01', 4, 4);
+Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('2', 12, 30, '2020-12-10', '2022-01-01', 1, 7);
+Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('3', 12, 5, '2019-10-10', '2022-02-05', 4, 5);
+Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('4', 12, 90, '2022-01-10', '2022-01-10', 2, 3);
 
 -- INSERT PHARMACY_ID FOR COLUMN ADDED LATER ON FILLED PRESCRIPTIONS
 update rx set pharmacy_id = 1 where RxID = 12654;
@@ -42,8 +42,8 @@ update rx set pharmacy_id = 2 where RxID = 59654;
 update rx set pharmacy_id = 4 where rxid = 54884;
 
 -- INSERTS FOR SOME UNFILLED PRESCRIPTIONS
-Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('10023', 9, 10, '2022-02-01', NULL, 2, 1);
-Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('59473', 12, 300, '2022-02-09', NULL, 5, 6);
+Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('5', 9, 10, '2022-02-01', NULL, 2, 1);
+Insert Into rx (RxID, _drugID, quantity, dateissued, datefilled, doctor_doctorid, patient_patientid) values ('6', 12, 300, '2022-02-09', NULL, 5, 6);
 
 
 

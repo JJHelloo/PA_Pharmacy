@@ -217,14 +217,31 @@ public class DataGenerate
       //zipcode
       pat.setZipcode(address.zipCode());
 
-      //primaryid
-      //search through list of doctors and pick primaryid
-
-      //perform count to establish how many times to loop
-
-      //generate random int from count
-
-      //perform select and pick id from row randomint
+      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "root"); )
+      {
+         //primaryid
+         PreparedStatement ps = con.prepareStatement("select count(*) from doctor");
+         ResultSet rs = ps.executeQuery();
+         rs.next();
+         //find how many doctors there are
+         int count = Integer.valueOf(rs.getString(1));
+         
+         //pick one at random
+         int randDoctorID = 1 + gen.nextInt(count - 1 + 1);
+         
+         //obtain that doctor's id
+         ps = con.prepareStatement("select id from doctor order by id");
+         rs = ps.executeQuery();
+         for (int i = 1; i <= randDoctorID; i++)
+            rs.next();
+         
+         //set doctor as primary doctor for patient
+         pat.setPrimaryID(rs.getInt(1));
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
 
       return pat;
    }
@@ -236,13 +253,50 @@ public class DataGenerate
       Random gen = new Random();
       Faker faker = new Faker();
 
-      //rxid
-      //search database for max rxid that exists (none could exist), and increment
-
-      //drugID
-      //pick random drug
-
+      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "root"); )
+      {
+         //rxid
+         //search database for max rxid that exists
+         PreparedStatement ps = con.prepareStatement("select max(RxID) from rx;");
+         ResultSet rs = ps.executeQuery();
+         rs.next();
+         //increment
+         int maxRxID = rs.getInt(1);
+         int newRxID = maxRxID + 1;
+         
+         String newRxIDasString = String.valueOf(newRxID);
+         //set rxid
+         pre.setRxid(newRxIDasString);
+         
+         //drugID
+         //find how many drugs there are
+         ps = con.prepareStatement("select count(*) from drug");
+         rs = ps.executeQuery();
+         rs.next();
+         int count = Integer.valueOf(rs.getString(1));
+         
+         //pick one at random
+         int randDrugID = 1 + gen.nextInt(count - 1 + 1);
+         
+         //obtain that drug's id
+         ps = con.prepareStatement("select drugid from drug");
+         rs = ps.executeQuery();
+         for (int i = 1; i <= randDrugID; i++)
+            rs.next();
+         
+         //set drugID
+         pre.setDrugID(rs.getInt(1));
+         
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+      
       //quantity (1-200)
+      int randQuantity = 1 + gen.nextInt(200 - 1 + 1);
+
+      pre.setQuantity(randQuantity);
 
       //dateissued
       //from 1900 to 2022
@@ -255,16 +309,56 @@ public class DataGenerate
       c.add(Calendar.DAY_OF_YEAR, gen.nextInt(365));
       Date dt = new Date(c.getTimeInMillis());
       String random_date = simpleDateFormat.format(dt);
+      
+      pre.setDateIssued(random_date);
 
-      //datefilled (can be null)
+      //datefilled is null
 
-      //doctor_doctorid
+      //doctorid
       //pick random doctor
+      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "root"); )
+      {
+         PreparedStatement ps = con.prepareStatement("select count(*) from doctor");
+         ResultSet rs = ps.executeQuery();
+         rs.next();
+         //find how many doctors there are
+         int count = Integer.valueOf(rs.getString(1));
+         
+         //pick one at random
+         int randDoctorID = 1 + gen.nextInt(count - 1 + 1);
+         
+         //obtain that doctor's id
+         ps = con.prepareStatement("select id from doctor order by id");
+         rs = ps.executeQuery();
+         for (int i = 1; i <= randDoctorID; i++)
+            rs.next();
+         //set doctor
+         pre.setDoctorID(rs.getInt(1));
+         
+         //patientid
+         ps = con.prepareStatement("select count(*) from patient");
+         rs = ps.executeQuery();
+         rs.next();
+         int patientCount = Integer.valueOf(rs.getString(1));
+         
+         //pick one at random
+         int randPatient = 1 + gen.nextInt(patientCount - 1 + 1);
+         
+         //obtain that patient's id
+         ps = con.prepareStatement("select id from patient order by id");
+         rs = ps.executeQuery();
+         for (int i = 1; i <= randPatient; i++)
+            rs.next();
+         
+         //set patientid
+         pre.setPatientID(rs.getInt(1));
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
 
-      //patient_patientid
-      //pick random patient
-
-      //pharmacy_id (null until filled)
+      //pharmacy_id is null
 
       return pre;
    }

@@ -15,18 +15,20 @@ public class DataGenerate
 {
    public static void main(String[] args)
    {
-      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "root"); )
+      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "fgfjy2y6V64"); )
       {
          //10 random doctors
          for (int i = 0; i < 10; i++)
          {
             Doctor doc = randomDoctor();
 
-            PreparedStatement ps = con.prepareStatement("update doctor set id =NULL, SSN=?, name =?, specialty =?, practice_since =?");
-            ps.setString(2,  doc.getSsn());
-            ps.setString(3, doc.getName());
-            ps.setString(4,  doc.getSpecialty());
-            ps.setString(5,  doc.getPractice_since_year());
+            PreparedStatement ps = con.prepareStatement("insert into doctor values (null, ?, ?, ?, ?)");
+            ps.setString(1, doc.getSsn());
+            ps.setString(2, doc.getName());
+            ps.setString(3, doc.getSpecialty());
+            ps.setString(4, doc.getPractice_since_year());
+            
+            ps.executeUpdate();
          }
 
          //1000 random patients
@@ -34,29 +36,33 @@ public class DataGenerate
          {
             Patient pat = randomPatient();
 
-            PreparedStatement ps = con.prepareStatement("update patient set id =NULL, SSN=?, name =?, birthdate =?, street =?, city =?, state =?, zipcode =?, primaryid =?");
-            ps.setString(2,  pat.getSsn());
-            ps.setString(3, pat.getName());
-            ps.setString(4,  pat.getBirthdate());
-            ps.setString(5,  pat.getStreet());
-            ps.setString(6,  pat.getCity());
-            ps.setString(7,  pat.getState());
-            ps.setString(8,  pat.getZipcode());
-            ps.setInt(9,  pat.getPrimaryID());
+            PreparedStatement ps = con.prepareStatement("insert into patient values (null, ?, ?, ?, ?, ?, ?, ?, ?)");
+            ps.setString(1, pat.getSsn());
+            ps.setString(2, pat.getName());
+            ps.setString(3, pat.getBirthdate());
+            ps.setString(4, pat.getStreet());
+            ps.setString(5, pat.getCity());
+            ps.setString(6, pat.getState());
+            ps.setString(7, pat.getZipcode());
+            ps.setInt(8, pat.getPrimaryID());
 
-            //use variables located in Patient.java
+            ps.executeUpdate();
          }
+         
          //5000 random prescriptions
          for (int i = 0; i < 5000; i++)
          {
             Prescription pre = randomPrescription();
 
-            //PreparedStatement
-            //ADDED getter and setter to prescription.java
-            PreparedStatement ps = con.prepareStatement("update rx set RxID =NULL, _drugID =?, quantity =?, dateissued =?, datefilled =?, doctor_doctorid ?, patient_patientid =?");
-            //use variables located in Prescription.java
+            PreparedStatement ps = con.prepareStatement("insert into rx values (?, ?, ?, ?, null, ?, ?, null)");
+            ps.setInt(1, Integer.valueOf(pre.getRxid()));
             ps.setInt(2, pre.getDrugID());
             ps.setInt(3, pre.getQuantity());
+            ps.setString(4, pre.getDateIssued());
+            ps.setInt(5, pre.getDoctorID());
+            ps.setInt(6, pre.getPatientID());
+            
+            ps.executeUpdate();
          }
       }
       catch (Exception e)
@@ -78,17 +84,6 @@ public class DataGenerate
       String lastName = faker.name().lastName();
 
       doc.setName(firstName + " " + lastName);
-
-      //old method. not scalable
-      /*
-      String[] fNames = { "Hazel", "Alyssa", "Devon", "Aya", "Fiza", "Kyle", "Hafsah", 
-      "Ann", "Kobe", "Ifrah" };
-      String[] lNames = { "Bradshaw", "Clarke", "Carrillo", "Snow", "Holden", 
-      "Massey", "Byrd", "Ritte", "Good", "Meza" };
-
-      doc.setName(fNames[gen.nextInt(fNames.length)] + " " 
-      + lNames[gen.nextInt(lNames.length)]);
-       */
 
       //specialty
       String[] specialties = { "Internal Medicine", 
@@ -217,7 +212,7 @@ public class DataGenerate
       //zipcode
       pat.setZipcode(address.zipCode());
 
-      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "root"); )
+      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "fgfjy2y6V64"); )
       {
          //primaryid
          PreparedStatement ps = con.prepareStatement("select count(*) from doctor");
@@ -253,7 +248,7 @@ public class DataGenerate
       Random gen = new Random();
       Faker faker = new Faker();
 
-      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "root"); )
+      try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pa_pharmacy", "root", "fgfjy2y6V64"); )
       {
          //rxid
          //search database for max rxid that exists
